@@ -1,0 +1,18 @@
+name: Check ARTIFACTS Feature
+on: [workflow_dispatch]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check GITHUB_ARTIFACTS
+        run: |
+          echo "GITHUB_ARTIFACTS=$GITHUB_ARTIFACTS"
+          echo "GITHUB_ARTIFACTS_LIST=$GITHUB_ARTIFACTS_LIST"
+          if [ -n "$GITHUB_ARTIFACTS" ]; then
+            echo "FEATURE IS LIVE"
+            ls -la "$GITHUB_ARTIFACTS" 2>/dev/null || echo "File does not exist yet"
+          else
+            echo "FEATURE NOT ENABLED"
+          fi
+          env | grep -i ARTIFACT | sort
+
